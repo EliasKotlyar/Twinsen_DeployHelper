@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+
+    <!--
+<preference for="Magento\Framework\App\ResourceConnection\ConnectionAdapterInterface"
+                type="\Twinsen\DeployHelper\Model\Type\Db\Pdo\ProxyConnectionAdapter"/>
+-->
+
+
+
+        <type name="\Magento\Framework\App\ResourceConnection">
+            <plugin name="connectionswitcher" type="Twinsen\DeployHelper\Model\ResourceConnectionPlugin" />
+        </type>
+
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="deploystaticcontent" xsi:type="object">Twinsen\DeployHelper\Console\Command\DeployStaticContent</item>
+                <item name="generatesqlitedb" xsi:type="object">Twinsen\DeployHelper\Console\Command\GenerateSqliteDB</item>
+
+
+            </argument>
+        </arguments>
+    </type>
+
+</config>

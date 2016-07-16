@@ -1,13 +1,35 @@
 Twinsen_DeployHelper
 ===================
-Deployhelper for Magento2
+Deploy static-content without using the Mysql-database. It will use a sqlite-database instead.
 
 Usage
 -----
 
+use the following command to generate a sqlite-database:
+
+    bin/magento deployhelper:generatedb
+
+After that, ensue that you have a file named staticsettings.db in your root directory.
+Please run the following command to generate the static files of M2:
+
+    bin/magento deployhelper:deploy
+
+This command will generate the static files by using the created sqlite database. You can run it on your custom CI-Scripts.    
+
+Technical Data:
+---------------
+
+- The module uses one interceptor: it has a "after"-plugin for the class \Magento\Framework\App\ResourceConnection  
+- The dump Command will export the following tables to the Sqlite-database:
+"core_config_data", "store", "store_group", "store_website", "theme", "translation"
+
+History
+-------
+
+
 Requirements
 ------------
-- Magento >= 2.0.0
+- Magento >= **2.1.0** (Please do not try on 2.0.x, because its not compatible due to changes on the core)
 - PHP >= 5.5.0
 
 Support

@@ -1,4 +1,11 @@
 <?php
+/**
+ * *
+ *  * Copyright © Elias Kotlyar - All rights reserved.
+ *  * See LICENSE.md bundled with this module for license details.
+ *
+ */
+
 namespace Twinsen\DeployHelper\Model;
 
 use Magento\Framework\App\ResourceConnection;
@@ -17,9 +24,13 @@ class ResourceConnectionPlugin
      * @var ObjectManagerInterface
      */
     private $objectManager;
+    /**
+     * @var \Magento\Framework\DB\Adapter\AdapterInterface
+     */
+    private $sqliteConnection;
 
     public function __construct(
-        \Magento\Framework\Registry $registry,
+        \Twinsen\DeployHelper\Model\Registry $registry,
         ObjectManagerInterface $objectManager
 
     )
@@ -31,12 +42,12 @@ class ResourceConnectionPlugin
 
     public function aftergetConnectionByName(\Magento\Framework\App\ResourceConnection $connection, $result)
     {
-        //throw new Exception();
-        return $this->createConnection();
 
         if ($this->registry->registry('use_sqlite')) {
-            //die("getting connection");
-
+            if(!$this->sqliteConnection){
+                return $this->createConnection();
+            }
+            $result = $this->sqliteConnection;
         }
         return $result;
     }

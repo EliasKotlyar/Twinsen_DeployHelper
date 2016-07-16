@@ -1,15 +1,17 @@
 <?xml version="1.0"?>
+
 <!--
-/**
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
--->
+  ~ /**
+  ~  * Copyright © Elias Kotlyar - All rights reserved.
+  ~  * See LICENSE.md bundled with this module for license details.
+  ~  */
+  -->
+
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
 
-    <!--
+    <!-- uncomment for Debugging purposes
 <preference for="Magento\Framework\App\ResourceConnection\ConnectionAdapterInterface"
                 type="\Twinsen\DeployHelper\Model\Type\Db\Pdo\ProxyConnectionAdapter"/>
 -->

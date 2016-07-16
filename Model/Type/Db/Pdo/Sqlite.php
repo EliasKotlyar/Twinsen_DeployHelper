@@ -1,10 +1,11 @@
 <?php
 /**
- * Mysql PDO DB adapter
+ * *
+ *  * Copyright © Elias Kotlyar - All rights reserved.
+ *  * See LICENSE.md bundled with this module for license details.
  *
- * Copyright © 2016 Magento. All rights reserved.
- * See COPYING.txt for license details.
  */
+
 
 // @codingStandardsIgnoreFile
 namespace Twinsen\DeployHelper\Model\Type\Db\Pdo;
@@ -208,9 +209,7 @@ class Sqlite extends \Zend_Db_Adapter_Pdo_Sqlite implements AdapterInterface
         $this->logger = $logger;
         $this->selectFactory = $selectFactory;
         try {
-            $config = array('dbname'
-            => "/var/www/m2contribute/sqliteadmin/deploy.sqlite"
-            );
+
             parent::__construct($config);
         } catch (\Zend_Db_Adapter_Exception $e) {
             throw new \InvalidArgumentException($e->getMessage(), $e->getCode(), $e);

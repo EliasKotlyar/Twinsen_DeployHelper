@@ -1,20 +1,28 @@
 <?php
+/**
+ * *
+ *  * Copyright © Elias Kotlyar - All rights reserved.
+ *  * See LICENSE.md bundled with this module for license details.
+ *
+ */
+
 namespace Twinsen\DeployHelper\Console\Command;
 
 use Magento\Framework\App\ObjectManagerFactory;
-use Magento\Store\Model\Store;
-use Magento\Store\Model\StoreManager;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Magento\Framework\ObjectManagerInterface;
+use Symfony\Component\Console\Command\Command;
+
+/**
+ * Class AbstractCommand
+ * @package Twinsen\DeployHelper\Console\Command
+ */
 class AbstractCommand extends Command
 {
     /**
      * @var \Magento\Framework\ObjectManagerInterface
      */
     protected $objectManager;
-  
+
 
     /**
      * Constructor
@@ -24,7 +32,7 @@ class AbstractCommand extends Command
     public function __construct(ObjectManagerInterface $objectManager)
     {
         $this->objectManager = $objectManager;
-        
+
         parent::__construct();
     }
 

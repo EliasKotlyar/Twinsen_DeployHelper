@@ -8,11 +8,8 @@
 
 namespace Twinsen\DeployHelper\Model;
 
-use Magento\Framework\App\ResourceConnection;
-use Magento\Framework\Exception\EmailNotConfirmedException;
 use Magento\Framework\ObjectManagerInterface;
-use Magento\Framework\Webapi\Exception;
-use Twinsen\DeployHelper\Model\Type\Db\Pdo\ProxyConnectionAdapter;
+use Twinsen\DeployHelper\Model\Type\Db\Pdo\SqliteConnectionAdapter;
 
 class ResourceConnectionPlugin
 {
@@ -44,7 +41,7 @@ class ResourceConnectionPlugin
     {
 
         if ($this->registry->registry('use_sqlite')) {
-            if(!$this->sqliteConnection){
+            if (!$this->sqliteConnection) {
                 return $this->createConnection();
             }
             $result = $this->sqliteConnection;
@@ -57,10 +54,14 @@ class ResourceConnectionPlugin
      */
     protected function createConnection()
     {
-        $connectionConfig = array();
+
+        $connectionConfig = array('dbname'
+        => "staticsettings.db"
+        );
+
         /** @var \Magento\Framework\App\ResourceConnection\ConnectionAdapterInterface $adapterInstance */
         $adapterInstance = $this->objectManager->create(
-            ProxyConnectionAdapter::class,
+            SqliteConnectionAdapter::class,
             ['config' => $connectionConfig]
         );
 

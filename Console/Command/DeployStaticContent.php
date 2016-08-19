@@ -8,11 +8,15 @@
 
 namespace Twinsen\DeployHelper\Console\Command;
 
+use Magento\Deploy\Console\Command\DeployStaticContentCommand;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Class DeployStaticContent
+ *
  * @package Twinsen\DeployHelper\Console\Command
  * Deploys Static Content without using the Database
  */
@@ -22,6 +26,7 @@ class DeployStaticContent extends AbstractCommand
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int
      */
 
@@ -42,12 +47,28 @@ class DeployStaticContent extends AbstractCommand
     }
 
     /**
-     *
+     * @inheritdoc
      */
-
     protected function configure()
     {
-        $this->setName('deployhelper:deploy')->setDescription('Deploys Static Content');
+        $this->setName('deployhelper:deploy')
+            ->setDescription('Deploys Static Content')
+            ->setDefinition(
+                [
+                    new InputOption(
+                        DeployStaticContentCommand::DRY_RUN_OPTION,
+                        '-d',
+                        InputOption::VALUE_NONE,
+                        'If specified, then no files will be actually deployed.'
+                    ),
+                    new InputArgument(
+                        DeployStaticContentCommand::LANGUAGE_OPTION,
+                        InputArgument::IS_ARRAY,
+                        'List of languages you want the tool populate files for.',
+                        ['en_US']
+                    ),
+                ]
+            );
+        parent::configure();
     }
-
 }

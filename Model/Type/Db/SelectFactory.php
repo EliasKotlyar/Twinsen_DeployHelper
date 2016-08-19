@@ -10,6 +10,7 @@ namespace Twinsen\DeployHelper\Model\Type\Db;
 
 use Twinsen\DeployHelper\Model\Type\Db\Select;
 use Magento\Framework\DB\Select\SelectRenderer;
+use Magento\Framework\DB\Select\SelectRendererFactory;
 use Magento\Framework\DB\Adapter\AdapterInterface;
 use Magento\Framework\Stdlib\StringUtils;
 use Magento\Framework\Stdlib\DateTime;
@@ -21,9 +22,9 @@ use Magento\Framework\DB\LoggerInterface;
 class SelectFactory
 {
     /**
-     * @var SelectRenderer
+     * @var SelectRendererFactory
      */
-    protected $selectRenderer;
+    protected $selectRendererFactory;
 
     /**
      * @var array
@@ -45,26 +46,26 @@ class SelectFactory
      * @var LoggerInterface
      */
     private $logger;
+
     /**
      * @var \Magento\Framework\DB\SelectFactory
      */
     private $selectFactory;
 
     /**
-     * @param SelectRenderer $selectRenderer
+     * @param SelectRendererFactory $selectRendererFactory
      * @param array $parts
      */
     public function __construct(
-        SelectRenderer $selectRenderer,
+        SelectRendererFactory $selectRendererFactory,
         StringUtils $stringUtils,
         DateTime $dateTime,
         LoggerInterface $logger,
         \Magento\Framework\DB\SelectFactory $selectFactory,
         $parts = []
     ) {
-        $this->selectRenderer = $selectRenderer;
+        $this->selectRendererFactory = $selectRendererFactory;
         $this->parts = $parts;
-
         $this->stringUtils = $stringUtils;
         $this->dateTime = $dateTime;
         $this->logger = $logger;
@@ -77,6 +78,8 @@ class SelectFactory
      */
     public function create(AdapterInterface $adapter)
     {
+        // create select renderer on-the-fly to prevent circular dependency issues
+        $selectRenderer = $this->selectRendererFactory->create();
 
         // Hack for getting the PDO-Mysql for the Parameter in PDO_MYSQL
         $config = array(
@@ -87,8 +90,6 @@ class SelectFactory
         $mysqlAdapter = new \Magento\Framework\DB\Adapter\Pdo\Mysql($this->stringUtils,$this->dateTime,$this->logger,$this->selectFactory,$config);
         // Hack End...
 
-
-
-        return new Select($adapter, $mysqlAdapter, $this->selectRenderer, $this->parts);
+        return new Select($adapter, $mysqlAdapter, $selectRenderer, $this->parts);
     }
 }

@@ -60,7 +60,7 @@ class GenerateDump
             $this->deleteFile($rootDir->getAbsolutePath(), $dbName);
         }
 
-        $tableArray = array("core_config_data", "store", "store_group", "store_website", "theme", "translation");
+        $tableArray = array("core_config_data", "store", "store_group", "store_website", "theme", "translation", "flag");
         $sqlite = new \Zend_Db_Adapter_Pdo_Sqlite(array('dbname' => $rootDir->getAbsolutePath() . "/" . $dbName));
         $filePath = $this->getModuleDir() . self::SAMPLEDB_DIRECTORY;
         $content = $this->readFile($filePath, self::SAMPLEDB_FILENAME);

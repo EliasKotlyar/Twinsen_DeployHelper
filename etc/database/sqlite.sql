@@ -79,4 +79,15 @@ CREATE TABLE `theme` (
   `type` smallint(6) NOT NULL ,
   `code` text 
 );
+
+----
+-- Table structure for flag
+----
+CREATE TABLE `flag` (
+  `flag_id` int(10) NOT NULL,
+  `flag_code` varchar(255) NOT NULL,
+  `state` smallint(5) NOT NULL,
+  `flag_data` text,
+  `last_update` int(10) NOT NULL
+);
 COMMIT;

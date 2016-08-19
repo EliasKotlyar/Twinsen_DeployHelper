@@ -39,10 +39,9 @@ class ResourceConnectionPlugin
 
     public function aftergetConnectionByName(\Magento\Framework\App\ResourceConnection $connection, $result)
     {
-
         if ($this->registry->registry('use_sqlite')) {
             if (!$this->sqliteConnection) {
-                return $this->createConnection();
+                $this->sqliteConnection = $this->createConnection();
             }
             $result = $this->sqliteConnection;
         }
